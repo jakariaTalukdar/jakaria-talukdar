@@ -23,11 +23,13 @@ export default function Footer() {
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6 rounded-2xl border border-white/10 bg-white/[0.03] px-6 py-7 md:px-8 backdrop-blur-sm">
             <div className="max-w-xl">
               <p className="text-[11px] uppercase tracking-[0.22em] text-primary mb-2">
-                Available for projects
+                Open for hire
               </p>
-              <h2 className="text-2xl md:text-3xl font-semibold text-white leading-tight">
-                Let’s build something{" "}
-                <span className="gradient-text-static">production-ready</span>
+              <h2 className="text-2xl font-semibold text-white leading-tight">
+                I&apos;m available for{" "}
+                <span className="gradient-text-static">client projects</span>{" "}
+                and{" "}
+                <span className="gradient-text-static">remote jobs</span>
               </h2>
               <p className="mt-2 text-sm text-alpha leading-relaxed">
                 Full-stack delivery with Laravel, React, Next.js, and MySQL —
@@ -193,7 +195,7 @@ export default function Footer() {
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-50" />
                 <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-primary" />
               </span>
-              Open to opportunities
+              Open for client projects & remote jobs
             </span>
             <a
               href={siteData.cvPdf}

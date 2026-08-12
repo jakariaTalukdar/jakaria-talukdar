@@ -119,14 +119,19 @@ export default function Hero() {
           {/* Copy */}
           <div className="lg:col-span-7 order-2 lg:order-1">
             <div
-              className="hero-fade-up inline-flex items-center gap-2 mb-6 text-xs tracking-[0.18em] uppercase text-alpha"
+              className="hero-fade-up mb-6 inline-flex max-w-full items-center gap-2.5 rounded-full border border-primary/40 bg-primary/10 px-4 py-2 text-sm sm:text-base font-medium text-primary shadow-[0_0_24px_rgba(0,255,128,0.12)]"
               style={{ animationDelay: "0.05s" }}
             >
-              <span className="relative flex h-2 w-2">
+              <span className="relative flex h-2.5 w-2.5 shrink-0">
                 <span className="absolute inline-flex h-full w-full rounded-full bg-primary opacity-60 animate-ping" />
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-primary" />
+                <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-primary" />
               </span>
-              Available for client projects & Remote Job
+              <span className="leading-snug">
+                I&apos;m available for{" "}
+                <span className="font-semibold text-white">client projects</span>
+                {" "}and{" "}
+                <span className="font-semibold text-white">remote jobs</span>
+              </span>
             </div>
 
             <h1

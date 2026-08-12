@@ -3,6 +3,7 @@ export const siteData = {
   headline: "Full Stack Developer",
   headlineDetail: "Laravel · React · Next.js · MySQL",
   location: "Dhaka, Bangladesh",
+  availability: "I'm available for client projects and remote jobs",
   tagline:
     "Building production web apps end-to-end — from database design and APIs to polished, responsive UIs.",
   bio: "Full Stack Developer with 2+ years of professional experience delivering 150+ web applications across CRM, HRM, e-commerce, hospital management, and education platforms. Strong in Laravel, MySQL, Inertia.js, Alpine.js, React, and Next.js — building both robust backends and polished frontends. Experienced shipping production systems end-to-end, from database design and APIs to responsive UI and performance optimization.",
