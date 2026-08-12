@@ -13,20 +13,18 @@ export default function About() {
           subtitle="Full-stack delivery across CRM, HRM, e-commerce, hospital, and education platforms."
         />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
-          <Reveal className="flex justify-center">
-            <div className="relative">
-              <div className="absolute inset-0 rounded-full bg-primary/20 blur-2xl scale-110" />
-              <div className="relative w-56 h-56 md:w-72 md:h-72 rounded-full overflow-hidden border-2 border-primary/60 shadow-[0_0_40px_rgba(0,255,128,0.2)]">
-                <Image
-                  src={siteData.profileImage}
-                  alt={siteData.name}
-                  fill
-                  className="object-cover"
-                  sizes="288px"
-                  priority
-                />
-              </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-stretch">
+          <Reveal className="h-full min-h-[320px] md:min-h-0">
+            <div className="relative h-full w-full overflow-hidden rounded-2xl border-2 border-primary/60 shadow-[0_0_40px_rgba(0,255,128,0.2)]">
+              <div className="absolute inset-0 bg-primary/10 blur-2xl" aria-hidden="true" />
+              <Image
+                src="/images/about-jakaria-talukdar.png"
+                alt={siteData.name}
+                fill
+                className="object-cover object-center"
+                sizes="(max-width: 768px) 100vw, 50vw"
+                priority
+              />
             </div>
           </Reveal>
 
