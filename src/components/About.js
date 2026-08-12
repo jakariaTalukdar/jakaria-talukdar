@@ -2,6 +2,7 @@ import Image from "next/image";
 import { siteData } from "@/lib/siteData";
 import Reveal from "./Reveal";
 import SectionHeader from "./SectionHeader";
+import StatCounter from "./StatCounter";
 
 export default function About() {
   return (
@@ -40,7 +41,7 @@ export default function About() {
                 <Reveal key={stat.label} delay={150 + i * 80}>
                   <div className="glass-card card-hover rounded-xl p-4 text-center">
                     <div className="text-xl md:text-2xl font-bold text-primary">
-                      {stat.value}
+                      <StatCounter value={stat.value} duration={2000} />
                     </div>
                     <div className="text-[11px] md:text-xs text-alpha mt-1">
                       {stat.label}
