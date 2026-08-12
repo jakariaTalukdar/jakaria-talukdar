@@ -92,17 +92,23 @@ export default function Footer() {
               Explore
             </h3>
             <ul className="space-y-2.5">
-              {navItems.map((item) => (
-                <li key={item.id}>
-                  <Link
-                    href={item.href}
-                    className="group inline-flex items-center gap-2 text-sm text-alpha hover:text-primary transition"
-                  >
-                    <span className="h-px w-0 bg-primary transition-all group-hover:w-3" />
-                    {item.name}
-                  </Link>
-                </li>
-              ))}
+              {navItems
+                .filter((item) =>
+                  ["/#about", "/#projects", "/#skills", "/#experience"].includes(
+                    item.href
+                  )
+                )
+                .map((item) => (
+                  <li key={item.id}>
+                    <Link
+                      href={item.href}
+                      className="group inline-flex items-center gap-2 text-sm text-alpha hover:text-primary transition"
+                    >
+                      <span className="h-px w-0 bg-primary transition-all group-hover:w-3" />
+                      {item.name}
+                    </Link>
+                  </li>
+                ))}
             </ul>
           </div>
 

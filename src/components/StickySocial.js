@@ -6,7 +6,7 @@ const whatsappUrl = `https://wa.me/8801798165091?text=${encodeURIComponent(
 
 export default function StickySocial() {
   return (
-    <div className="fixed bottom-5 right-4 sm:bottom-6 sm:right-6 z-[60] flex flex-col gap-3">
+    <div className="fixed bottom-5 right-4 sm:bottom-10 sm:right-6 z-[60] flex flex-col gap-3">
       <a
         href={whatsappUrl}
         target="_blank"
@@ -33,18 +33,6 @@ export default function StickySocial() {
         </span>
       </a>
 
-      <a
-        href={siteData.facebook}
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="View Facebook profile"
-        className="group relative flex h-12 w-12 items-center justify-center rounded-full bg-[#1877F2] text-white shadow-[0_8px_24px_rgba(24,119,242,0.35)] transition-transform duration-200 hover:scale-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
-      >
-        <FacebookIcon className="h-5 w-5" />
-        <span className="pointer-events-none absolute right-full mr-3 hidden whitespace-nowrap rounded-md bg-black/80 px-2 py-1 text-xs text-white opacity-0 transition group-hover:opacity-100 sm:block">
-          Facebook
-        </span>
-      </a>
     </div>
   );
 }
