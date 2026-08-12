@@ -77,7 +77,7 @@ export default function Navbar() {
             <Link
               href="/#home"
               onClick={closeMenu}
-              className="relative z-10 text-white font-semibold tracking-wide text-sm sm:text-base"
+              className="relative z-10 text-white font-semibold tracking-wide text-base sm:text-lg md:text-xl"
             >
               <span className="text-primary">{siteData.name.split(" ")[0]}</span>{" "}
               <span className="text-white/90">
