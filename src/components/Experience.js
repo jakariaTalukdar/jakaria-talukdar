@@ -81,6 +81,30 @@ export default function Experience() {
                         <p className="mt-1 text-sm font-medium text-primary">
                           {job.company}
                         </p>
+                        {job.website ? (
+                          <a
+                            href={job.website}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="mt-1.5 inline-flex items-center gap-1.5 text-xs text-alpha hover:text-primary transition"
+                          >
+                            <span>{job.websiteLabel || job.website}</span>
+                            <svg
+                              className="h-3 w-3"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                              aria-hidden="true"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M7 17L17 7M17 7H7M17 7v10"
+                              />
+                            </svg>
+                          </a>
+                        ) : null}
                       </header>
 
                       <ul className="mb-5 space-y-2.5">
