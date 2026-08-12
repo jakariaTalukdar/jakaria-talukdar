@@ -81,6 +81,15 @@ export default function GetInTouch() {
                   <LinkedInIcon />
                   <span>linkedin.com/in/jakaria-talukdar</span>
                 </a>
+                <a
+                  href={siteData.facebook}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-x-2 hover:text-primary transition"
+                >
+                  <FacebookIcon />
+                  <span>facebook.com/jakaria.talukdar2001</span>
+                </a>
               </div>
 
               <div className="flex flex-wrap gap-3 pt-2">
@@ -177,6 +186,22 @@ function LinkedInIcon() {
       <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
       <rect width="4" height="12" x="2" y="9" />
       <circle cx="4" cy="4" r="2" />
+    </svg>
+  );
+}
+
+function FacebookIcon() {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      className="text-primary shrink-0"
+      aria-hidden="true"
+    >
+      <path d="M24 12.073C24 5.446 18.627.073 12 .073S0 5.446 0 12.073C0 18.063 4.388 23.027 10.125 23.927v-8.437H7.078v-3.417h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.417h-2.796v8.437C19.612 23.027 24 18.063 24 12.073z" />
     </svg>
   );
 }

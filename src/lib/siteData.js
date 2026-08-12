@@ -11,6 +11,7 @@ export const siteData = {
   email: "jakaria.talukdar2001@gmail.com",
   github: "https://github.com/jakariaTalukdar/",
   linkedin: "https://www.linkedin.com/in/jakaria-talukdar/",
+  facebook: "https://www.facebook.com/jakaria.talukdar2001",
   cvPdf: "/cv/Jakaria_Talukdar_Web_Developer_CV.pdf",
   profileImage: "/images/profile.png",
   languages: ["English", "Bangla", "Urdu", "Hindi"],
