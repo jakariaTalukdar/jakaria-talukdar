@@ -40,7 +40,7 @@ export default function Navbar() {
   const handleNavClick = () => setIsMenuOpen(false);
 
   return (
-    <nav className="w-full fixed top-1 z-50">
+    <nav className="w-full fixed top-2 z-50">
       <div className="max-w-6xl bg-[#ffffff36] md:bg-[#f1f1f113] backBlur rounded-lg shadow-md px-5 py-2 mx-3 md:mx-auto flex items-center justify-between">
         <Link
           href="/#home"

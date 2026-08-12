@@ -126,7 +126,7 @@ export default function Hero() {
                 <span className="absolute inline-flex h-full w-full rounded-full bg-primary opacity-60 animate-ping" />
                 <span className="relative inline-flex h-2 w-2 rounded-full bg-primary" />
               </span>
-              Available for client projects · {siteData.location}
+              Available for client projects & Remote Job
             </div>
 
             <h1
