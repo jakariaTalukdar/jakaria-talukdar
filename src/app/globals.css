@@ -1,26 +1,165 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #0a0a17;
+  --foreground: #ededed;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-Inter);
+  --color-primary: #00ff80;
+  --color-dark-green: #0d7a4e;
+  --color-dark: #0a0a17;
+  --color-alpha: #b0b0b0;
+  --color-surface: #0f0f0f;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-Inter), Arial, Helvetica, sans-serif;
+}
+
+.backBlur {
+  backdrop-filter: blur(5px);
+}
+
+.btn {
+  @apply px-6 py-2 bg-primary text-black text-sm rounded-full font-semibold hover:bg-transparent hover:text-white border border-primary hover:border-white transition-all duration-200 cursor-pointer will-change-transform;
+  @apply hover:shadow-[0_8px_30px_rgba(0,255,128,0.15)] hover:scale-[1.01] active:scale-[0.99];
+}
+
+.transparent-button {
+  @apply px-6 py-2 bg-transparent text-white text-sm rounded-full font-semibold hover:bg-primary hover:text-black border border-white hover:border-primary transition-all duration-200 cursor-pointer will-change-transform;
+  @apply hover:shadow-[0_8px_30px_rgba(0,255,128,0.15)] hover:scale-[1.01] active:scale-[0.99];
+}
+
+.card-hover {
+  @apply transition-transform duration-300 will-change-transform;
+}
+
+.card-hover:hover {
+  @apply translate-y-[-2px] scale-[1.01] shadow-[0_12px_40px_rgba(0,255,128,0.08)];
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.glass-card:hover {
+  border-color: #00ff9d;
+  box-shadow: 0 5px 15px -3px rgba(0, 255, 157, 0.2);
+}
+
+.gradient-text {
+  background: linear-gradient(
+    135deg,
+    #00ff9d 0%,
+    #00f7ff 25%,
+    #a855f7 50%,
+    #00f7ff 75%,
+    #00ff9d 100%
+  );
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradient-shift 8s ease infinite;
+}
+
+.gradient-text-static {
+  background: linear-gradient(90deg, #00ff9d, #00f7ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+@keyframes gradient-shift {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px) translateX(0px);
+  }
+  33% {
+    transform: translateY(-20px) translateX(10px);
+  }
+  66% {
+    transform: translateY(10px) translateX(-10px);
+  }
+}
+
+@keyframes pulse-glow {
+  0%,
+  100% {
+    opacity: 0.4;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.05);
+  }
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.hero-fade-up {
+  animation: fadeInUp 1s ease-out both;
+}
+
+.floating-orb {
+  animation: float 20s ease-in-out infinite;
+}
+
+.pulse-glow {
+  animation: pulse-glow 4s ease-in-out infinite;
+}
+
+.rotating-ring {
+  animation: rotate 30s linear infinite;
+}
+
+.bg-contact {
+  background-image:
+    linear-gradient(rgba(10, 10, 23, 0.85), rgba(10, 10, 23, 0.92)),
+    linear-gradient(rgba(0, 255, 157, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 255, 157, 0.06) 1px, transparent 1px);
+  background-size:
+    auto,
+    40px 40px,
+    40px 40px;
 }
