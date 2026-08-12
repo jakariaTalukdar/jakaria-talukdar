@@ -2,6 +2,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import StickySocial from "@/components/StickySocial";
 
 const inter = Inter({
   variable: "--font-Inter",
@@ -38,6 +39,7 @@ export default function RootLayout({ children }) {
         <Navbar />
         <main className="flex-grow">{children}</main>
         <Footer />
+        <StickySocial />
       </body>
     </html>
   );
