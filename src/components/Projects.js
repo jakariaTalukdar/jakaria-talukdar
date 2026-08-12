@@ -1,8 +1,14 @@
-import { projectsData, projectsNote } from "@/lib/projectsData";
+import Link from "next/link";
+import { getGroupedProjects, projectsNote } from "@/lib/projectsData";
+import ProjectCard from "./ProjectCard";
 import Reveal from "./Reveal";
 import SectionHeader from "./SectionHeader";
 
+const PREVIEW_PER_CATEGORY = 3;
+
 export default function Projects() {
+  const grouped = getGroupedProjects();
+
   return (
     <section
       id="projects"
@@ -12,66 +18,63 @@ export default function Projects() {
         <SectionHeader
           title="Selected"
           accent="Projects"
-          subtitle="Live production sites shipped for clients across e-commerce, education, corporate, and hospitality."
+          subtitle="Live production sites grouped by e-commerce, company websites, and more."
         />
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
-          {projectsData.map((project, i) => (
-            <Reveal key={project.id} delay={(i % 3) * 80}>
-              <a
-                href={project.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="glass-card card-hover rounded-xl p-5 h-full flex flex-col group block"
-              >
-                <div className="flex items-start justify-between gap-2 mb-3">
-                  <h3 className="text-base font-semibold text-white group-hover:text-primary transition">
-                    {project.title}
-                  </h3>
-                  <svg
-                    className="w-4 h-4 text-alpha group-hover:text-primary shrink-0 mt-1 transition"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M7 17L17 7M17 7H7M17 7v10"
-                    />
-                  </svg>
-                </div>
+        <div className="space-y-12">
+          {grouped.map((group, groupIndex) => {
+            const preview = group.projects.slice(0, PREVIEW_PER_CATEGORY);
+            const remaining = group.projects.length - preview.length;
 
-                <span className="inline-flex self-start text-[11px] px-2 py-0.5 rounded-full border border-primary/30 bg-primary/10 text-primary mb-3">
-                  {project.role}
-                </span>
-
-                <p className="text-sm text-alpha leading-relaxed flex-grow mb-4">
-                  {project.summary}
-                </p>
-
-                <div className="flex flex-wrap gap-1.5 mt-auto">
-                  {project.stack.map((tech) => (
-                    <span
-                      key={tech}
-                      className="text-[10px] px-2 py-0.5 rounded bg-white/5 text-gray-300 border border-white/10"
+            return (
+              <div key={group.id}>
+                <Reveal delay={groupIndex * 60}>
+                  <div className="mb-5 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3">
+                    <div>
+                      <h3 className="text-xl font-semibold text-white flex items-center gap-3">
+                        <span className="gradient-text-static">{group.label}</span>
+                        <span className="text-xs font-medium text-alpha border border-white/10 rounded-full px-2 py-0.5">
+                          {group.projects.length}
+                        </span>
+                      </h3>
+                      <p className="text-sm text-alpha mt-1">{group.description}</p>
+                    </div>
+                    <Link
+                      href={`/projects?category=${group.id}`}
+                      className="text-sm text-primary hover:underline self-start sm:self-auto"
                     >
-                      {tech}
-                    </span>
+                      View all {group.label.toLowerCase()} →
+                    </Link>
+                  </div>
+                </Reveal>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
+                  {preview.map((project, i) => (
+                    <Reveal key={project.id} delay={(i % 3) * 70}>
+                      <ProjectCard project={project} />
+                    </Reveal>
                   ))}
                 </div>
 
-                <p className="text-[11px] text-primary/80 mt-3 truncate">
-                  {project.domain}
-                </p>
-              </a>
-            </Reveal>
-          ))}
+                {remaining > 0 ? (
+                  <Reveal delay={120}>
+                    <p className="mt-3 text-xs text-alpha">
+                      +{remaining} more in this category on the projects page.
+                    </p>
+                  </Reveal>
+                ) : null}
+              </div>
+            );
+          })}
         </div>
 
-        <Reveal delay={200}>
-          <p className="text-center text-sm text-alpha mt-10">{projectsNote}</p>
+        <Reveal delay={160}>
+          <div className="mt-12 flex flex-col items-center gap-4">
+            <p className="text-center text-sm text-alpha max-w-2xl">{projectsNote}</p>
+            <Link href="/projects" className="btn">
+              View all projects
+            </Link>
+          </div>
         </Reveal>
       </div>
     </section>

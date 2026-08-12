@@ -3,23 +3,30 @@
 import { navItems } from "@/lib/navItems";
 import { siteData } from "@/lib/siteData";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function Navbar() {
+  const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [active, setActive] = useState("#home");
+  const [active, setActive] = useState("/#home");
 
   useEffect(() => {
-    const ids = navItems.map((item) => item.href.replace("#", ""));
+    if (pathname?.startsWith("/projects")) {
+      setActive("/#projects");
+      return;
+    }
+
+    const ids = navItems.map((item) => item.href.replace("/#", ""));
 
     const onScroll = () => {
       const offset = window.scrollY + 120;
-      let current = "#home";
+      let current = "/#home";
 
       for (const id of ids) {
         const el = document.getElementById(id);
         if (el && el.offsetTop <= offset) {
-          current = `#${id}`;
+          current = `/#${id}`;
         }
       }
       setActive(current);
@@ -28,7 +35,7 @@ export default function Navbar() {
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  }, [pathname]);
 
   const handleNavClick = () => setIsMenuOpen(false);
 
@@ -36,7 +43,7 @@ export default function Navbar() {
     <nav className="w-full fixed top-1 z-50">
       <div className="max-w-6xl bg-[#ffffff36] md:bg-[#f1f1f113] backBlur rounded-lg shadow-md px-5 py-2 mx-3 md:mx-auto flex items-center justify-between">
         <Link
-          href="#home"
+          href="/#home"
           onClick={handleNavClick}
           className="text-white font-semibold tracking-wide text-sm sm:text-base"
         >

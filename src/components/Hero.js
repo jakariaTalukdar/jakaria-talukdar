@@ -159,16 +159,10 @@ export default function Hero() {
               className="hero-fade-up flex flex-col sm:flex-row gap-3 mb-10"
               style={{ animationDelay: "0.42s" }}
             >
-              <Link
-                href="#projects"
-                className="btn text-center hover:shadow-[0_0_28px_rgba(0,255,128,0.35)]"
-              >
+              <Link href="#projects" className="btn text-center">
                 View selected work
               </Link>
-              <Link
-                href="#contact"
-                className="transparent-button text-center"
-              >
+              <Link href="#contact" className="transparent-button text-center">
                 Discuss a project
               </Link>
             </div>
