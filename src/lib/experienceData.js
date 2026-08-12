@@ -18,7 +18,7 @@ export const experienceData = [
     role: "Frontend Developer",
     company: "MMIT SOFT LTD.",
     period: "Aug 2024 – Aug 2025",
-    location: "Dhaka, Bangladesh",
+    location: "Dhanmondi, Dhaka",
     current: false,
     stack: ["HTML/CSS", "Tailwind", "JavaScript", "React", "Next.js", "Laravel"],
     bullets: [

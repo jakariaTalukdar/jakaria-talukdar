@@ -14,8 +14,8 @@ export default function About() {
         />
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-stretch">
-          <Reveal className="h-full min-h-[320px] md:min-h-0">
-            <div className="relative h-full w-full overflow-hidden rounded-2xl border-2 border-primary/60 shadow-[0_0_40px_rgba(0,255,128,0.2)]">
+          <Reveal className="w-full md:h-full">
+            <div className="relative w-full aspect-[3/4] md:aspect-auto md:h-full md:min-h-[420px] overflow-hidden rounded-2xl border-2 border-primary/60 shadow-[0_0_40px_rgba(0,255,128,0.2)]">
               <div className="absolute inset-0 bg-primary/10 blur-2xl" aria-hidden="true" />
               <Image
                 src="/images/about-jakaria-talukdar.png"

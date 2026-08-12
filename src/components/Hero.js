@@ -177,9 +177,9 @@ export default function Hero() {
               className="hero-fade-up flex flex-wrap items-center gap-x-3 gap-y-2 text-sm"
               style={{ animationDelay: "0.52s" }}
             >
-              <span className="text-white/45 text-xs uppercase tracking-wider mr-1">
+              {/* <span className="text-white/45 text-xs uppercase tracking-wider mr-1">
                 Stack
-              </span>
+              </span> */}
               {techLine.map((tech, i) => (
                 <span
                   key={tech}

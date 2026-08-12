@@ -87,9 +87,6 @@ export default function GetInTouch() {
                 <a href={siteData.cvPdf} download className="btn">
                   Download CV (PDF)
                 </a>
-                <a href={siteData.cvDocx} download className="transparent-button">
-                  Download DOCX
-                </a>
               </div>
             </div>
           </Reveal>

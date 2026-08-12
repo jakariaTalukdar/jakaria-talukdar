@@ -12,7 +12,6 @@ export const siteData = {
   github: "https://github.com/jakariaTalukdar/",
   linkedin: "https://www.linkedin.com/in/jakaria-talukdar/",
   cvPdf: "/cv/Jakaria_Talukdar_Web_Developer_CV.pdf",
-  cvDocx: "/cv/Jakaria_Talukdar_Web_Developer_CV.docx",
   profileImage: "/images/profile.png",
   languages: ["English", "Bangla", "Urdu", "Hindi"],
   education: {
