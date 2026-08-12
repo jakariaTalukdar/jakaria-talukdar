@@ -38,6 +38,6 @@ export const siteData = {
   stats: [
     { value: "150+", label: "Projects delivered" },
     { value: "2+", label: "Years experience" },
-    { value: "13", label: "Featured live sites" },
+    { value: "130+", label: "Featured live sites" },
   ],
 };
