@@ -1,13 +1,28 @@
+"use client";
+
 import Link from "next/link";
-import { getGroupedProjects, projectsNote } from "@/lib/projectsData";
+import { useMemo, useState } from "react";
+import {
+  getProjectsByCategory,
+  projectCategories,
+  projectsData,
+  projectsNote,
+} from "@/lib/projectsData";
 import ProjectCard from "./ProjectCard";
 import Reveal from "./Reveal";
 import SectionHeader from "./SectionHeader";
 
-const PREVIEW_PER_CATEGORY = 3;
+const PREVIEW_LIMIT = 6;
+const filters = [{ id: "all", label: "All" }, ...projectCategories];
 
 export default function Projects() {
-  const grouped = getGroupedProjects();
+  const [active, setActive] = useState("all");
+
+  const filtered = useMemo(() => getProjectsByCategory(active), [active]);
+  const preview = filtered.slice(0, PREVIEW_LIMIT);
+  const remaining = filtered.length - preview.length;
+  const activeMeta =
+    projectCategories.find((category) => category.id === active) || null;
 
   return (
     <section
@@ -18,62 +33,98 @@ export default function Projects() {
         <SectionHeader
           title="Selected"
           accent="Projects"
-          subtitle="Live production sites grouped by e-commerce, company websites, and more."
+          subtitle="Browse live work by type — e-commerce, company websites, and more."
         />
 
-        <div className="space-y-12">
-          {grouped.map((group, groupIndex) => {
-            const preview = group.projects.slice(0, PREVIEW_PER_CATEGORY);
-            const remaining = group.projects.length - preview.length;
+        <Reveal>
+          <div className="mb-8 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+            <div
+              className="flex flex-wrap gap-2"
+              role="tablist"
+              aria-label="Project types"
+            >
+              {filters.map((filter) => {
+                const count =
+                  filter.id === "all"
+                    ? projectsData.length
+                    : getProjectsByCategory(filter.id).length;
+                const isActive = active === filter.id;
 
-            return (
-              <div key={group.id}>
-                <Reveal delay={groupIndex * 60}>
-                  <div className="mb-5 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3">
-                    <div>
-                      <h3 className="text-xl font-semibold text-white flex items-center gap-3">
-                        <span className="gradient-text-static">{group.label}</span>
-                        <span className="text-xs font-medium text-alpha border border-white/10 rounded-full px-2 py-0.5">
-                          {group.projects.length}
-                        </span>
-                      </h3>
-                      <p className="text-sm text-alpha mt-1">{group.description}</p>
-                    </div>
-                    <Link
-                      href={`/projects?category=${group.id}`}
-                      className="text-sm text-primary hover:underline self-start sm:self-auto"
+                return (
+                  <button
+                    key={filter.id}
+                    type="button"
+                    role="tab"
+                    aria-selected={isActive}
+                    onClick={() => setActive(filter.id)}
+                    className={`rounded-full border px-4 py-2 text-sm transition ${
+                      isActive
+                        ? "border-primary bg-primary text-black font-semibold shadow-[0_0_24px_rgba(0,255,128,0.2)]"
+                        : "border-white/15 bg-white/[0.03] text-gray-300 hover:border-primary/50 hover:text-primary"
+                    }`}
+                  >
+                    {filter.label}
+                    <span
+                      className={`ml-2 text-xs ${
+                        isActive ? "text-black/70" : "text-alpha"
+                      }`}
                     >
-                      View all {group.label.toLowerCase()} →
-                    </Link>
-                  </div>
-                </Reveal>
+                      {count}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
-                  {preview.map((project, i) => (
-                    <Reveal key={project.id} delay={(i % 3) * 70}>
-                      <ProjectCard project={project} />
-                    </Reveal>
-                  ))}
-                </div>
-
-                {remaining > 0 ? (
-                  <Reveal delay={120}>
-                    <p className="mt-3 text-xs text-alpha">
-                      +{remaining} more in this category on the projects page.
-                    </p>
-                  </Reveal>
-                ) : null}
-              </div>
-            );
-          })}
-        </div>
-
-        <Reveal delay={160}>
-          <div className="mt-12 flex flex-col items-center gap-4">
-            <p className="text-center text-sm text-alpha max-w-2xl">{projectsNote}</p>
-            <Link href="/projects" className="btn">
+            <Link href="/projects" className="btn self-start lg:self-auto whitespace-nowrap">
               View all projects
             </Link>
+          </div>
+        </Reveal>
+
+        {activeMeta ? (
+          <Reveal delay={40}>
+            <p className="mb-5 text-sm text-alpha">{activeMeta.description}</p>
+          </Reveal>
+        ) : null}
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
+          {preview.map((project, i) => (
+            <Reveal key={`${active}-${project.id}`} delay={(i % 3) * 60}>
+              <ProjectCard
+                project={project}
+                showCategory={active === "all"}
+              />
+            </Reveal>
+          ))}
+        </div>
+
+        <Reveal delay={120}>
+          <div className="mt-10 flex flex-col sm:flex-row items-center justify-between gap-4 rounded-2xl border border-white/10 bg-white/[0.02] px-5 py-4">
+            <div className="text-center sm:text-left">
+              <p className="text-sm text-gray-300">
+                Showing{" "}
+                <span className="text-primary font-semibold">{preview.length}</span>{" "}
+                of {filtered.length}{" "}
+                {active === "all" ? "projects" : activeMeta?.label.toLowerCase()}
+                {remaining > 0 ? ` · ${remaining} more available` : null}
+              </p>
+              <p className="text-xs text-alpha mt-1">{projectsNote}</p>
+            </div>
+
+            <div className="flex flex-wrap justify-center gap-3">
+              {/* {active !== "all" ? (
+                <Link
+                  href={`/projects?category=${active}`}
+                  className="transparent-button"
+                >
+                  View all {activeMeta?.label}
+                </Link>
+              ) : null} */}
+              <Link href="/projects" className="btn">
+                View all projects
+              </Link>
+            </div>
           </div>
         </Reveal>
       </div>
