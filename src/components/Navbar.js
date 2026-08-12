@@ -121,20 +121,24 @@ export default function Navbar() {
               }`}
             >
               <span className="sr-only">{isMenuOpen ? "Close" : "Menu"}</span>
-              <span className="relative block h-3.5 w-5">
+              <span className="relative block h-4 w-5">
                 <span
-                  className={`absolute left-0 top-0 h-0.5 w-full rounded-full bg-current transition-all duration-300 ${
-                    isMenuOpen ? "top-1.5 rotate-45" : ""
+                  className={`absolute left-0 block h-0.5 w-5 rounded-full bg-current transition-all duration-300 origin-center ${
+                    isMenuOpen
+                      ? "top-1/2 -translate-y-1/2 rotate-45"
+                      : "top-0 translate-y-0 rotate-0"
                   }`}
                 />
                 <span
-                  className={`absolute left-0 top-1.5 h-0.5 w-full rounded-full bg-current transition-all duration-300 ${
-                    isMenuOpen ? "opacity-0 translate-x-2" : ""
+                  className={`absolute left-0 top-1/2 block h-0.5 w-5 -translate-y-1/2 rounded-full bg-current transition-all duration-300 ${
+                    isMenuOpen ? "opacity-0 scale-x-0" : "opacity-100 scale-x-100"
                   }`}
                 />
                 <span
-                  className={`absolute left-0 top-3 h-0.5 w-full rounded-full bg-current transition-all duration-300 ${
-                    isMenuOpen ? "top-1.5 -rotate-45" : ""
+                  className={`absolute left-0 block h-0.5 w-5 rounded-full bg-current transition-all duration-300 origin-center ${
+                    isMenuOpen
+                      ? "top-1/2 -translate-y-1/2 -rotate-45"
+                      : "top-full -translate-y-full rotate-0"
                   }`}
                 />
               </span>
