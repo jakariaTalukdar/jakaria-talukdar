@@ -303,3 +303,17 @@ body {
     40px 40px,
     40px 40px;
 }
+
+@keyframes experience-node-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(0, 255, 128, 0.35);
+  }
+  50% {
+    box-shadow: 0 0 0 8px rgba(0, 255, 128, 0);
+  }
+}
+
+.experience-node-pulse {
+  animation: experience-node-pulse 2.4s ease-in-out infinite;
+}
