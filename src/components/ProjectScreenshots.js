@@ -2,11 +2,17 @@
 
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 
 export default function ProjectScreenshots({ screenshots, projectTitle, liveUrl }) {
   const [failed, setFailed] = useState({});
   const [active, setActive] = useState(0);
   const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const availableIndexes = screenshots
     .map((_, i) => i)
@@ -65,6 +71,80 @@ export default function ProjectScreenshots({ screenshots, projectTitle, liveUrl 
       ? screenshots[active]
       : screenshots[availableIndexes[0]];
 
+  const modal =
+    lightboxOpen && lightboxImage && mounted
+      ? createPortal(
+          <div
+            className="fixed inset-0 z-[200] flex items-center justify-center"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Screenshot modal"
+          >
+            {/* Dark backdrop */}
+            <button
+              type="button"
+              aria-label="Close modal"
+              className="absolute inset-0 bg-black/90 backdrop-blur-sm cursor-default"
+              onClick={closeLightbox}
+            />
+
+            {/* Close (X) button */}
+            <button
+              type="button"
+              onClick={closeLightbox}
+              className="absolute right-4 top-4 z-20 flex h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white transition hover:border-primary hover:bg-primary hover:text-black"
+              aria-label="Close"
+            >
+              <CloseIcon />
+            </button>
+
+            {/* Prev / Next */}
+            {availableIndexes.length > 1 ? (
+              <>
+                <button
+                  type="button"
+                  onClick={goPrev}
+                  className="absolute left-3 sm:left-5 top-1/2 z-20 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white transition hover:border-primary hover:text-primary"
+                  aria-label="Previous screenshot"
+                >
+                  <ChevronLeftIcon />
+                </button>
+                <button
+                  type="button"
+                  onClick={goNext}
+                  className="absolute right-3 sm:right-5 top-1/2 z-20 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white transition hover:border-primary hover:text-primary"
+                  aria-label="Next screenshot"
+                >
+                  <ChevronRightIcon />
+                </button>
+              </>
+            ) : null}
+
+            {/* Modal image panel */}
+            <div
+              className="relative z-10 mx-4 flex max-h-[85vh] max-w-[92vw] flex-col items-center"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="relative overflow-hidden rounded-xl border border-white/10 bg-black shadow-[0_20px_80px_rgba(0,0,0,0.6)]">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  key={lightboxImage.src}
+                  src={lightboxImage.src}
+                  alt={lightboxImage.alt || `${projectTitle} fullscreen`}
+                  className="block max-h-[78vh] max-w-[90vw] w-auto h-auto object-contain"
+                />
+              </div>
+
+              <p className="mt-4 rounded-full border border-white/15 bg-black/60 px-4 py-2 text-xs text-white backdrop-blur">
+                {lightboxImage.label || "Screenshot"} ·{" "}
+                {availableIndexes.indexOf(active) + 1}/{availableIndexes.length}
+              </p>
+            </div>
+          </div>,
+          document.body
+        )
+      : null;
+
   return (
     <div>
       <div className="mb-4 flex items-center justify-between gap-3">
@@ -86,7 +166,7 @@ export default function ProjectScreenshots({ screenshots, projectTitle, liveUrl 
           type="button"
           onClick={() => openLightbox(active)}
           className="group relative mb-4 block w-full overflow-hidden rounded-2xl border border-white/10 bg-black/40 text-left"
-          aria-label={`Zoom ${current.label || "screenshot"}`}
+          aria-label={`Open ${current.label || "screenshot"}`}
         >
           <div className="relative aspect-[16/10] w-full">
             <Image
@@ -114,9 +194,9 @@ export default function ProjectScreenshots({ screenshots, projectTitle, liveUrl 
               {current.label}
             </span>
           ) : null}
-          <span className="absolute right-3 bottom-3 inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-black/70 px-3 py-1.5 text-[11px] text-white backdrop-blur opacity-90 group-hover:opacity-100">
+          <span className="absolute right-3 bottom-3 inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-black/70 px-3 py-1.5 text-[11px] text-white backdrop-blur">
             <ZoomIcon />
-            Click to zoom
+            Click to enlarge
           </span>
         </button>
       ) : (
@@ -151,7 +231,7 @@ export default function ProjectScreenshots({ screenshots, projectTitle, liveUrl 
                   ? "border-primary shadow-[0_0_20px_rgba(0,255,128,0.15)]"
                   : "border-white/10 hover:border-primary/40"
               }`}
-              aria-label={`Zoom ${shot.label || `screenshot ${index + 1}`}`}
+              aria-label={`Open ${shot.label || `screenshot ${index + 1}`}`}
             >
               <Image
                 src={shot.src}
@@ -169,84 +249,66 @@ export default function ProjectScreenshots({ screenshots, projectTitle, liveUrl 
                   {shot.label}
                 </span>
               ) : null}
-              <span className="absolute inset-0 flex items-center justify-center bg-black/0 transition group-hover:bg-black/35">
-                <span className="opacity-0 group-hover:opacity-100 transition text-white">
-                  <ZoomIcon />
-                </span>
-              </span>
             </button>
           );
         })}
       </div>
 
-      {lightboxOpen && lightboxImage ? (
-        <div
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/95 p-3 sm:p-6"
-          role="dialog"
-          aria-modal="true"
-          aria-label="Screenshot fullscreen view"
-          onClick={closeLightbox}
-        >
-          <button
-            type="button"
-            onClick={closeLightbox}
-            className="absolute right-4 top-4 z-10 flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white hover:bg-primary hover:text-black transition"
-            aria-label="Close fullscreen image"
-          >
-            ✕
-          </button>
-
-          {availableIndexes.length > 1 ? (
-            <>
-              <button
-                type="button"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  goPrev();
-                }}
-                className="absolute left-3 sm:left-6 z-10 flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white hover:border-primary hover:text-primary transition"
-                aria-label="Previous screenshot"
-              >
-                ←
-              </button>
-              <button
-                type="button"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  goNext();
-                }}
-                className="absolute right-3 sm:right-16 z-10 flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white hover:border-primary hover:text-primary transition"
-                aria-label="Next screenshot"
-              >
-                →
-              </button>
-            </>
-          ) : null}
-
-          <div
-            className="relative h-full w-full max-w-7xl"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <Image
-              key={lightboxImage.src}
-              src={lightboxImage.src}
-              alt={lightboxImage.alt || `${projectTitle} fullscreen`}
-              fill
-              className="object-contain"
-              sizes="100vw"
-              unoptimized={Boolean(lightboxImage.remote)}
-              priority
-            />
-          </div>
-
-          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 rounded-full border border-white/15 bg-black/70 px-4 py-2 text-xs text-white backdrop-blur">
-            {lightboxImage.label || "Screenshot"} ·{" "}
-            {availableIndexes.indexOf(active) + 1}/{availableIndexes.length}
-            <span className="hidden sm:inline text-alpha"> · Esc to close</span>
-          </div>
-        </div>
-      ) : null}
+      {modal}
     </div>
+  );
+}
+
+function CloseIcon() {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.5"
+      strokeLinecap="round"
+      className="h-5 w-5"
+      aria-hidden="true"
+    >
+      <path d="M6 6l12 12M18 6L6 18" />
+    </svg>
+  );
+}
+
+function ChevronLeftIcon() {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="h-5 w-5"
+      aria-hidden="true"
+    >
+      <path d="M15 18l-6-6 6-6" />
+    </svg>
+  );
+}
+
+function ChevronRightIcon() {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="h-5 w-5"
+      aria-hidden="true"
+    >
+      <path d="M9 18l6-6-6-6" />
+    </svg>
   );
 }
 
