@@ -406,30 +406,39 @@ export function getRelatedProjects(project, limit = 3) {
 
 /** Maps project id -> local screenshot folder under /public/project-screenshots */
 const projectScreenshotFolders = {
-  watchshopbd: { folder: "watchshop", count: 6 },
-  mahijewellers: { folder: "mahi-jewellers", count: 8 },
-  cozy: { folder: "cozy", count: 4 },
-  doubleaa: { folder: "doubleA", count: 6 },
-  alhera: { folder: "al-hera-motors", count: 7 },
-  srsit: { folder: "srsit", count: 5 },
-  greenzm: { folder: "greenzm", count: 4 },
-  signature: { folder: "signature", count: 12 },
-  winmark: { folder: "winmark", count: 8 },
-  attic: { folder: "attic-design", count: 7 },
-  btigroup: { folder: "bti", count: 3 },
-  kuakata: { folder: "kuakata", count: 10 },
-  mozahar: { folder: "mozahar", count: 22 },
+  watchshopbd: { folder: "watchshop", desktop: 6, mobile: 5 },
+  mahijewellers: { folder: "mahi-jewellers", desktop: 8, mobile: 5 },
+  cozy: { folder: "cozy", desktop: 4, mobile: 5 },
+  doubleaa: { folder: "doubleA", desktop: 6, mobile: 6 },
+  alhera: { folder: "al-hera-motors", desktop: 7, mobile: 5 },
+  srsit: { folder: "srsit", desktop: 5, mobile: 6 },
+  greenzm: { folder: "greenzm", desktop: 4, mobile: 6 },
+  signature: { folder: "signature", desktop: 12, mobile: 5 },
+  winmark: { folder: "winmark", desktop: 8, mobile: 5 },
+  attic: { folder: "attic-design", desktop: 7, mobile: 7 },
+  btigroup: { folder: "bti", desktop: 3, mobile: 5 },
+  kuakata: { folder: "kuakata", desktop: 10, mobile: 7 },
+  mozahar: { folder: "mozahar", desktop: 22, mobile: 7 },
 };
 
-function buildLocalScreenshots(project, folder, count) {
+function buildDeviceScreenshots(project, folder, device, count) {
+  const labelPrefix = device === "desktop" ? "Desktop" : "Mobile";
   return Array.from({ length: count }, (_, index) => {
     const n = index + 1;
     return {
-      src: `/project-screenshots/${folder}/${n}.png`,
-      alt: `${project.title} screenshot ${n}`,
-      label: `Screenshot ${n}`,
+      src: `/project-screenshots/${folder}/${device}/${n}.png`,
+      alt: `${project.title} ${device} screenshot ${n}`,
+      label: `${labelPrefix} ${n}`,
+      device,
     };
   });
+}
+
+function buildLocalScreenshots(project, meta) {
+  return [
+    ...buildDeviceScreenshots(project, meta.folder, "desktop", meta.desktop || 0),
+    ...buildDeviceScreenshots(project, meta.folder, "mobile", meta.mobile || 0),
+  ];
 }
 
 /** Local screenshots if provided; otherwise folder map; else live-site preview captures */
@@ -448,7 +457,7 @@ export function getProjectScreenshots(project) {
 
   const mapped = projectScreenshotFolders[project.id];
   if (mapped) {
-    return buildLocalScreenshots(project, mapped.folder, mapped.count);
+    return buildLocalScreenshots(project, mapped);
   }
 
   return [
@@ -457,12 +466,14 @@ export function getProjectScreenshots(project) {
       alt: `${project.title} desktop preview`,
       label: "Desktop",
       remote: true,
+      device: "desktop",
     },
     {
       src: `https://image.thum.io/get/width/420/crop/820/noanimate/${project.url}`,
       alt: `${project.title} mobile preview`,
       label: "Mobile",
       remote: true,
+      device: "mobile",
     },
   ];
 }
