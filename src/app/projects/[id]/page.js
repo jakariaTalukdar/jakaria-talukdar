@@ -91,7 +91,7 @@ export default async function ProjectDetailsPage({ params }) {
                 {project.title}
               </h1>
               <p className="text-base sm:text-lg text-gray-300 leading-relaxed max-w-3xl mb-6">
-                {project.overview || project.summary}
+                {project.summary}
               </p>
 
               <div className="flex flex-wrap gap-3">
@@ -151,13 +151,51 @@ export default async function ProjectDetailsPage({ params }) {
         </Reveal>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-14">
-          <Reveal delay={100} className="lg:col-span-8">
-            <ProjectScreenshots
-              screenshots={screenshots}
-              projectTitle={project.title}
-              liveUrl={project.url}
-            />
-          </Reveal>
+          <div className="lg:col-span-8 space-y-6">
+            <Reveal delay={80}>
+              <div className="glass-card rounded-2xl p-5 sm:p-6 space-y-8">
+                <DetailBlock title="Project Overview">
+                  <p className="text-sm sm:text-base text-gray-300 leading-relaxed">
+                    {project.overview || project.summary}
+                  </p>
+                </DetailBlock>
+
+                {project.technology ? (
+                  <DetailBlock title="Technology">
+                    <p className="text-sm sm:text-base text-gray-300 leading-relaxed">
+                      {project.technology}
+                    </p>
+                    <div className="mt-4 flex flex-wrap gap-1.5">
+                      {project.stack.map((tech) => (
+                        <span
+                          key={tech}
+                          className="rounded-md border border-primary/25 bg-primary/10 px-2.5 py-1 text-[11px] text-primary"
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+                  </DetailBlock>
+                ) : null}
+
+                {project.structure ? (
+                  <DetailBlock title="Project Structure">
+                    <p className="text-sm sm:text-base text-gray-300 leading-relaxed">
+                      {project.structure}
+                    </p>
+                  </DetailBlock>
+                ) : null}
+              </div>
+            </Reveal>
+
+            <Reveal delay={100}>
+              <ProjectScreenshots
+                screenshots={screenshots}
+                projectTitle={project.title}
+                liveUrl={project.url}
+              />
+            </Reveal>
+          </div>
 
           <div className="lg:col-span-4 space-y-6">
             <Reveal delay={140}>
@@ -234,6 +272,22 @@ function InfoRow({ label, value }) {
     <div className="flex items-start justify-between gap-4 border-b border-white/5 pb-3">
       <span className="text-xs text-alpha">{label}</span>
       <span className="text-sm text-gray-200 text-right">{value}</span>
+    </div>
+  );
+}
+
+function DetailBlock({ title, children }) {
+  const words = title.trim().split(/\s+/);
+  const lead = words.slice(0, -1).join(" ");
+  const accent = words.at(-1);
+
+  return (
+    <div>
+      <h2 className="text-lg font-semibold text-white mb-3">
+        {lead ? `${lead} ` : null}
+        <span className="gradient-text-static">{accent}</span>
+      </h2>
+      {children}
     </div>
   );
 }
