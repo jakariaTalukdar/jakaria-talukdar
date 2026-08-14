@@ -404,7 +404,35 @@ export function getRelatedProjects(project, limit = 3) {
     .slice(0, limit);
 }
 
-/** Local screenshots if provided; otherwise live-site preview captures */
+/** Maps project id -> local screenshot folder under /public/project-screenshots */
+const projectScreenshotFolders = {
+  watchshopbd: { folder: "watchshop", count: 6 },
+  mahijewellers: { folder: "mahi-jewellers", count: 8 },
+  cozy: { folder: "cozy", count: 4 },
+  doubleaa: { folder: "doubleA", count: 6 },
+  alhera: { folder: "al-hera-motors", count: 7 },
+  srsit: { folder: "srsit", count: 5 },
+  greenzm: { folder: "greenzm", count: 4 },
+  signature: { folder: "signature", count: 12 },
+  winmark: { folder: "winmark", count: 8 },
+  attic: { folder: "attic-design", count: 7 },
+  btigroup: { folder: "bti", count: 3 },
+  kuakata: { folder: "kuakata", count: 10 },
+  mozahar: { folder: "mozahar", count: 22 },
+};
+
+function buildLocalScreenshots(project, folder, count) {
+  return Array.from({ length: count }, (_, index) => {
+    const n = index + 1;
+    return {
+      src: `/project-screenshots/${folder}/${n}.png`,
+      alt: `${project.title} screenshot ${n}`,
+      label: `Screenshot ${n}`,
+    };
+  });
+}
+
+/** Local screenshots if provided; otherwise folder map; else live-site preview captures */
 export function getProjectScreenshots(project) {
   if (project.screenshots?.length) {
     return project.screenshots.map((shot, index) =>
@@ -416,6 +444,11 @@ export function getProjectScreenshots(project) {
           }
         : shot
     );
+  }
+
+  const mapped = projectScreenshotFolders[project.id];
+  if (mapped) {
+    return buildLocalScreenshots(project, mapped.folder, mapped.count);
   }
 
   return [
