@@ -23,6 +23,9 @@ export const metadata = {
     "Dhaka",
     "Portfolio",
   ],
+  verification: {
+    google: "Dv2q3tHTX4JVuA6mmyY35ipSS-4WcZ79VwpHbkqfIu4",
+  },
   openGraph: {
     title: "Jakaria Talukdar — Full Stack Developer",
     description:
