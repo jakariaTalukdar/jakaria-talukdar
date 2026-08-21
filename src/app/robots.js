@@ -1,4 +1,4 @@
-const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://jakaria-talukdar.com";
+const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://jakaria-talukdar.vercel.app";
 
 export default function robots() {
   return {
